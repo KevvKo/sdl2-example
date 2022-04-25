@@ -17,7 +17,7 @@ private:
 	SDL_Renderer * Renderer = NULL;
 
 private:	
-	void OnEvent 		();
+	void OnEvent 		(SDL_Event * Event);
 	bool Init  			();
 	void Render 		();
 	void CleanUp  		();

@@ -9,10 +9,26 @@ int Canvas::Execute(){
 	if(!Init()) return 0;
 	Running = true;
 
-	return 0;
+	SDL_Event Event;
+
+	while(Running){
+		
+		while(SDL_PollEvent(&Event) != 0){
+			OnEvent(&Event);
+
+			if(Event.type == SDL_QUIT) Running = false;
+		}
+
+		Render();
+		SDL_Delay(1);
+
+	}
+
+	CleanUp();
+	return 1;
 }
 
-void Canvas::OnEvent(){}
+void Canvas::OnEvent(SDL_Event * Event){}
 
 bool Canvas::Init(){
 
