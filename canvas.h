@@ -6,7 +6,21 @@ class Canvas {
 
 public: 
 
-	Canvas			();
+	Canvas				();
+	int Execute			();
+
+private: 
+
+	bool Running;
+	SDL_Window * Window = NULL;
+	SDL_Surface * Surface = NULL;
+	SDL_Renderer * Renderer = NULL;
+
+private:	
+	void OnEvent 		();
+	bool Init  			();
+	void Render 		();
+	void CleanUp  		();
 	
 };
 
