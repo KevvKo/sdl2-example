@@ -14,9 +14,7 @@ int Canvas::Execute(){
 	while(Running){
 		
 		while(SDL_PollEvent(&Event) != 0){
-			OnEvent(&Event);
-
-			if(Event.type == SDL_QUIT) Running = false;
+			OnEvent(Event);
 		}
 
 		Render();
@@ -28,7 +26,20 @@ int Canvas::Execute(){
 	return 1;
 }
 
-void Canvas::OnEvent(SDL_Event * Event){}
+void Canvas::OnEvent(SDL_Event Event){
+
+	switch(Event.type){
+
+		case SDL_QUIT:
+			Running = false;
+			exit(0);
+			break;
+
+		default:
+			break;
+	}
+
+}
 
 bool Canvas::Init(){
 
@@ -54,18 +65,46 @@ bool Canvas::Init(){
 		return false;
 	}
 
-	Surface = SDL_GetWindowSurface(Window);
 	Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
 
 	if(Renderer == NULL){
-		printf("Unable to create renderer %s", SDL_GetError());
+		printf("Unable to create renderer: %s", SDL_GetError());
 		return false;
 	}
 
-	SDL_SetRenderDrawColor( Renderer, 0x00, 0x00, 0x00, 0xFF);
+    r.x = 50;
+    r.y = 50;
+    r.w = 50;
+    r.h = 50;
+
 	return true;
 }
 
-void Canvas::Render(){}
+void Canvas::Render(){
 
-void Canvas::CleanUp(){}
+	SDL_SetRenderDrawColor( Renderer, 255, 0, 0, 255 );
+	SDL_RenderClear(Renderer);
+	DrawRect();
+	SDL_RenderPresent(Renderer);
+}
+
+void Canvas::CleanUp(){
+
+	if(Renderer) {
+		SDL_DestroyRenderer(Renderer);
+		Renderer = NULL;
+	}
+
+	if(Window) {
+		SDL_DestroyWindow(Window);
+		Window = NULL;
+	}
+
+    SDL_Quit();
+}
+
+void Canvas::DrawRect(){
+
+	SDL_SetRenderDrawColor( Renderer, 0, 0, 255, 255 );
+    SDL_RenderFillRect( Renderer, &r );
+}

@@ -13,15 +13,15 @@ private:
 
 	bool Running;
 	SDL_Window * Window = NULL;
-	SDL_Surface * Surface = NULL;
 	SDL_Renderer * Renderer = NULL;
+	SDL_Rect r;
 
 private:	
-	void OnEvent 		(SDL_Event * Event);
+	void OnEvent 		(SDL_Event Event);
 	bool Init  			();
 	void Render 		();
 	void CleanUp  		();
-	
+	void DrawRect		();
 };
 
 #endif 
